@@ -229,10 +229,10 @@
         android:id="@+id/txt_sub_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Sub Result"
-        app:layout_constraintBottom_toTopOf="@+id/guideline11"
+        android:text="@string/zero"
+        app:layout_constraintBottom_toTopOf="@+id/txt_result"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
@@ -241,11 +241,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginBottom="16dp"
-        android:text="TextView"
+        android:text="@string/zero"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="#000000"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txt_sub_result"
+        app:layout_constraintBottom_toTopOf="@+id/guideline11"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent" />

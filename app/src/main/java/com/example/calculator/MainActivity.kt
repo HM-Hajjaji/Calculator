@@ -2,6 +2,7 @@ package com.example.calculator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 
@@ -36,8 +37,10 @@ class MainActivity : AppCompatActivity() {
 
         this.initialized()
         this.handelClickButtonText()
+        this.handelClickButtonOperators()
         this.clear(this.btnClear)
         this.backspace(this.btnBackspace)
+        this.point(this.btnPoint)
     }
 
     fun initialized(){
@@ -66,7 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
     fun handelClickButtonText()
     {
-        val listButtons = listOf(this.btnOne,this.btnTwo,this.btnThree,this.btnFour,this.btnFive,this.btnSix,this.btnSeven,this.btnEight,this.btnNine,this.btnZero,this.btnDoubleZero,this.btnPoint)
+        val listButtons = listOf(this.btnOne,this.btnTwo,this.btnThree,this.btnFour,this.btnFive,this.btnSix,this.btnSeven,this.btnEight,this.btnNine,this.btnZero,this.btnDoubleZero)
         for (btn in listButtons)
         {
             btn.setOnClickListener {
@@ -75,17 +78,48 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun handelClickButtonOperators()
+    {
+        val listButtons = listOf(this.btnPercent,this.btnDivision,this.btnMultiplication,this.btnSubtract,this.btnPlus)
+        for (btn in listButtons)
+        {
+            btn.setOnClickListener {
+               this.txtSubResult.text = this.value+" ("+btn.text+")"
+            }
+        }
+    }
+
     fun clear(btn:Button){
         btn.setOnClickListener {
             this.value = ""
-            this.txtResult.text =this.value
-            this.txtSubResult.text = ""
+            this.txtResult.text ="0"
+            this.txtSubResult.text = "0"
         }
     }
     fun backspace(btn: Button){
         btn.setOnClickListener {
             this.value = this.value.dropLast(1)
-            this.txtResult.text = this.value
+            if(this.value.length < 1){
+                this.value=""
+                this.txtResult.text = "0"
+                this.txtSubResult.text = "0"
+            }else{
+                this.txtResult.text = this.value
+            }
+        }
+    }
+    fun point(btn: Button){
+        btn.setOnClickListener {
+            if (!this.value.contains('.'))
+            {
+                this.value+=btn.text
+            }
+            if (this.value == ".")
+            {
+                this.value = "0."
+            }
+            this.txtResult.text=this.value
         }
     }
 }
