@@ -1,10 +1,15 @@
 package com.example.calculator
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+//import javax.script.*
+//import org.jetbrains.kotlin.script.util.*
+//import kotlin.script.experimental.annotations.KotlinScript
+import net.objecthunter.exp4j.ExpressionBuilder
+import java.text.DecimalFormat
 
 class MainActivity : AppCompatActivity() {
     private lateinit var btnClear: Button
@@ -30,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var txtResult: TextView
     private lateinit var txtSubResult: TextView
     private var value:String = ""
+    private var isPoint:Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         this.clear(this.btnClear)
         this.backspace(this.btnBackspace)
         this.point(this.btnPoint)
+        this.equal()
     }
 
     fun initialized(){
@@ -74,7 +81,7 @@ class MainActivity : AppCompatActivity() {
         {
             btn.setOnClickListener {
                 this.value+=btn.text.toString()
-                this.txtResult.text = this.value
+                this.affectValue()
             }
         }
     }
@@ -85,7 +92,9 @@ class MainActivity : AppCompatActivity() {
         for (btn in listButtons)
         {
             btn.setOnClickListener {
-               this.txtSubResult.text = this.value+" ("+btn.text+")"
+                this.value+=btn.text.toString()
+                this.isPoint = true
+                this.affectValue()
             }
         }
     }
@@ -95,6 +104,7 @@ class MainActivity : AppCompatActivity() {
             this.value = ""
             this.txtResult.text ="0"
             this.txtSubResult.text = "0"
+            this.isPoint = true
         }
     }
     fun backspace(btn: Button){
@@ -105,13 +115,13 @@ class MainActivity : AppCompatActivity() {
                 this.txtResult.text = "0"
                 this.txtSubResult.text = "0"
             }else{
-                this.txtResult.text = this.value
+                this.affectValue()
             }
         }
     }
     fun point(btn: Button){
         btn.setOnClickListener {
-            if (!this.value.contains('.'))
+            if (this.isPoint)
             {
                 this.value+=btn.text
             }
@@ -119,7 +129,20 @@ class MainActivity : AppCompatActivity() {
             {
                 this.value = "0."
             }
-            this.txtResult.text=this.value
+            this.isPoint = false
+            this.affectValue()
         }
+    }
+
+    fun affectValue(){
+        this.txtResult.text=this.value
+    }
+    fun equal(){
+        this.btnEqual.setOnClickListener {
+            this.txtSubResult.text = this.eval(this.value)
+        }
+    }
+    fun eval(expression : String):String{
+        return DecimalFormat("#,##0.00").format(ExpressionBuilder(expression).build().evaluate()).toString()
     }
 }

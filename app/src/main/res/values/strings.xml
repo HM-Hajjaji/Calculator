@@ -12,7 +12,7 @@
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="three">3</string>
-    <string name="multiplication">x</string>
+    <string name="multiplication">*</string>
     <string name="plus">+</string>
     <string name="Subtract">-</string>
     <string name="equal">=</string>
